@@ -18,6 +18,12 @@ class Command(BaseCommand):
             help='Username of the account to attach records to (default: admin)'
         )
         parser.add_argument(
+            '--password',
+            type=str,
+            default='admin123',
+            help='Password to set for the user (default: admin123)'
+        )
+        parser.add_argument(
             '--clear',
             action='store_true',
             help='Clear existing transactions, budgets, keywords, and categories for this user before seeding'
@@ -25,18 +31,21 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         username = options['username']
+        password = options['password']
         clear = options['clear']
 
         user, created = User.objects.get_or_create(
             username=username,
-            defaults={'email': f'{username}@example.com'}
+            defaults={'email': f'{username}@example.com', 'is_staff': True, 'is_superuser': True}
         )
+        user.set_password(password)
+        user.is_staff = True
+        user.is_superuser = True
+        user.save()
         if created:
-            user.set_password('admin123')
-            user.save()
-            self.stdout.write(self.style.SUCCESS(f"Created user '{username}' with default password 'admin123'"))
+            self.stdout.write(self.style.SUCCESS(f"Created superuser '{username}' with password '{password}'"))
         else:
-            self.stdout.write(f"Using existing user '{username}'")
+            self.stdout.write(self.style.SUCCESS(f"Updated password for '{username}' to '{password}'"))
 
         if clear:
             Transaction.objects.filter(user=user).delete()
