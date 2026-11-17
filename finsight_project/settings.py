@@ -12,7 +12,12 @@ if RENDER_EXTERNAL_HOSTNAME:
     ALLOWED_HOSTS = [RENDER_EXTERNAL_HOSTNAME]
     CSRF_TRUSTED_ORIGINS = [f'https://{RENDER_EXTERNAL_HOSTNAME}']
 else:
-    ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'testserver', '0.0.0.0']
+    ALLOWED_HOSTS = ['*']
+    CSRF_TRUSTED_ORIGINS = [
+        'http://localhost:8000',
+        'http://127.0.0.1:8000',
+        'http://10.35.24.197:8000',
+    ]
 
 # Application definition
 INSTALLED_APPS = [
