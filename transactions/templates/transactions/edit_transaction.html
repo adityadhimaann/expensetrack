@@ -1,0 +1,29 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Edit Transaction | FinSight AI{% endblock %}
+
+{% block content %}
+<div class="content-header">
+    <h1 class="page-title">Edit Transaction</h1>
+</div>
+
+<div class="content-card">
+    <form method="post" class="add-transaction-form" novalidate>
+        {% csrf_token %}
+        
+        {% for field in form %}
+            <div class="form-group">
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {{ field }}
+                {% if field.help_text %}<small class="form-text text-muted">{{ field.help_text|safe }}</small>{% endif %}
+                {% for error in field.errors %}<p class="error-text">{{ error }}</p>{% endfor %}
+            </div>
+        {% endfor %}
+        
+        <div class="d-grid mt-4" style="display: flex; gap: 1rem;">
+            <a href="{% url 'dashboard' %}" class="btn-secondary" style="text-align: center; line-height: 2.2;">Cancel</a>
+            <button type="submit" class="btn-glow-primary" style="flex: 1;">Save Changes</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

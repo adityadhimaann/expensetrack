@@ -1,0 +1,21 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Confirm Deletion | FinSight AI{% endblock %}
+
+{% block content %}
+<div class="content-header">
+    <h1 class="page-title">Confirm Deletion</h1>
+</div>
+
+<div class="content-card text-center" style="max-width: 600px; margin: 2rem auto; text-align: center;">
+    <p class="lead mb-4" style="font-size: 1.15rem; line-height: 1.8;">
+        Are you sure you want to delete the transaction: <br>
+        <strong>"{{ object.description }}"</strong> amounting to <strong>₹{{ object.amount }}</strong>?
+    </p>
+    <form method="post" style="display: flex; justify-content: center; gap: 1rem;">
+        {% csrf_token %}
+        <a href="{% url 'dashboard' %}" class="btn-secondary" style="padding: 0.6rem 1.5rem; text-decoration: none;">Cancel</a>
+        <button type="submit" class="btn-glow-primary" style="background: linear-gradient(45deg, #e53935, #b71c1c); padding: 0.6rem 1.5rem;">Confirm Delete</button>
+    </form>
+</div>
+{% endblock %}
