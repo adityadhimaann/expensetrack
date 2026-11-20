@@ -17,6 +17,7 @@ else:
         'http://localhost:8000',
         'http://127.0.0.1:8000',
         'http://10.35.24.197:8000',
+        'http://10.35.11.165:8000',
     ]
 
 # Application definition
