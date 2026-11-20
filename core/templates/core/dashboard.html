@@ -100,7 +100,7 @@
                     <span class="budget-amounts">₹{{ item.spent_amount|floatformat:2 }} / ₹{{ item.budget_amount|floatformat:2 }}</span>
                 </div>
                 <div class="progress-bar-container">
-                    <div class="progress-bar-fill {{ item.bar_color_class }}" style="width: {{ item.percentage }}%;"></div>
+                    <div class="progress-bar-fill {{ item.bar_color_class }}" data-width="{{ item.percentage }}"></div>
                 </div>
             </div>
         {% endfor %}
@@ -122,6 +122,12 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
+        // Set and animate progress bar widths dynamically
+        document.querySelectorAll('.progress-bar-fill[data-width]').forEach(function(bar) {
+            const width = bar.getAttribute('data-width') || '0';
+            bar.style.width = width + '%';
+        });
+
         const ctx = document.getElementById('spendingPieChart');
         const labelsElem = document.getElementById('chart-labels-data');
         const dataElem = document.getElementById('chart-values-data');
